@@ -5,5 +5,115 @@
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5498958"
 	},
-	"item": []
+	"item": [
+		{
+			"name": "https://reqres.in/api/users?",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse response\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// 1. Status code validation\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// 2. Response time validation\r",
+							"pm.test(\"Response time is under 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"// 3. Validate response structure\r",
+							"pm.test(\"Response contains pagination fields\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"page\");\r",
+							"    pm.expect(jsonData).to.have.property(\"per_page\");\r",
+							"    pm.expect(jsonData).to.have.property(\"total\");\r",
+							"    pm.expect(jsonData).to.have.property(\"data\");\r",
+							"});\r",
+							"\r",
+							"// 4. Validate data array\r",
+							"pm.test(\"Data is an array\", function () {\r",
+							"    pm.expect(jsonData.data).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"// 5. Validate user object fields\r",
+							"pm.test(\"Each user has mandatory fields\", function () {\r",
+							"    jsonData.data.forEach(user => {\r",
+							"        pm.expect(user).to.have.property(\"id\");\r",
+							"        pm.expect(user).to.have.property(\"email\");\r",
+							"        pm.expect(user).to.have.property(\"first_name\");\r",
+							"        pm.expect(user).to.have.property(\"last_name\");\r",
+							"        pm.expect(user).to.have.property(\"avatar\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "asdsadsa",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "asdsad",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.36.1",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://reqres.in/api/users?",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }
